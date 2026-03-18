@@ -1,10 +1,11 @@
 import "./style.css";
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+
+const canvas = document.querySelector("canvas");
 
 const scene = new THREE.Scene();
 const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff });
+const material = new THREE.MeshBasicMaterial({ color: 0xff00ff });
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
@@ -16,17 +17,16 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.z = 5;
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
+const renderer = new THREE.WebGLRenderer({ canvas });
 renderer.setSize(window.innerWidth, window.innerHeight);
-
-const controls = new OrbitControls(camera, renderer.domElement);
-
-document.body.appendChild(renderer.domElement);
+//renderer.render(scene, camera);
 
 function animate() {
   requestAnimationFrame(animate);
+
+  cube.rotation.x += 0.01;
   cube.rotation.y += 0.01;
+
   renderer.render(scene, camera);
 }
-
 animate();
